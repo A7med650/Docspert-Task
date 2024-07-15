@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Account Detail | {{ account.name }}
+{% endblock title %}
+
+{% block content %}
+
+<div class="card w-75 mx-auto m-2">
+    <h5 class="card-header">Account Detail</h5>
+    <div class="card-body">
+        <p>Account Name: {{ account.name }}</p>
+        <p>Account Balance: {{ account.balance }}</p>
+    </div>
+</div>
+{% endblock content %}

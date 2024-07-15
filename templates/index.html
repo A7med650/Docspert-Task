@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block title %}
+Upload Accounts
+{% endblock title %}
+
+{% block content %}
+
+<div class="card w-75 mx-auto m-2">
+    <h5 class="card-header">Upload</h5>
+    <div class="card-body">
+      <h5 class="card-title">Upload Accounts from CSV, XLS, or XLSX</h5>
+      
+      <div class="input-group mb-3">
+        <form method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}" role="alert">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+            
+            <input class="form-control" type="file" accept=".csv, .xls, .xlsx" name="file" required>
+            <button type="submit" class="btn btn-primary mt-1">Upload</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+{% endblock content %}

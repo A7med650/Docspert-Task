@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Account List
+{% endblock title %}
+
+{% block content %}
+
+<div class="card w-75 mx-auto m-2">
+    <h5 class="card-header">Accounts</h5>
+    <div class="card-body">
+        <div class="list-group w-75 mx-auto">
+            
+            {% for account in accounts %}
+                <a href="{% url 'account_detail' account.id %}" class="list-group-item list-group-item-action">
+                    {{ account.name }}
+                </a>
+            {% endfor %}
+
+            {% if not accounts %}
+            <p>Please Upload Accounts</p>
+            <a class="btn btn-primary" href="{% url 'upload_accounts' %}" role="button">Upload Accounts</a>
+            {% else %}
+            <nav aria-label="Page navigation mt-1">
+                <ul class="pagination justify-content-center mt-1">
+                    {% if accounts.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ accounts.previous_page_number }}">Previous</a></li>
+                    {% endif %}
+
+                    {% if accounts.number|add:'-4' > 1 %}
+                        <li  class="page-item"><a class="page-link" href="?page={{ accounts.number|add:'-5' }}">&hellip;</a></li>
+                    {% endif %}
+
+                    {% for i in accounts.paginator.page_range %}
+                        {% if accounts.number == i %}
+                            <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                        {% elif i > accounts.number|add:'-5' and i < accounts.number|add:'5' %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if accounts.paginator.num_pages > accounts.number|add:'4' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ accounts.number|add:'5' }}">&hellip;</a></li>
+                    {% endif %}
+
+
+
+                    {% if accounts.has_next  %}
+                        <li class="page-item"><a class="page-link" href="?page={{ accounts.next_page_number }}">Next</a></li>
+                    {% endif %}
+                  
+                  
+                </ul>
+              </nav>
+            {% endif%}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
